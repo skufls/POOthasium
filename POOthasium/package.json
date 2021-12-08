@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "arcade": "^0.0.2",
+    "matter": "^0.2.0",
+    "phaser": "^3.55.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.4",
+    "typescript": "^4.4.4"
+  }
+}
