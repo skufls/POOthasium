@@ -806,7 +806,7 @@ function (_super) {
       loop: true
     });
     _this.enemythrow = scene.time.addEvent({
-      delay: 100,
+      delay: 500,
       callback: function callback() {
         _this.scene.Epoopgroup.poopEthrow(_this.scene.enemy.x, _this.scene.enemy.y, _this.scene.enemy.rotation, _this.scene.blockslayer);
 
