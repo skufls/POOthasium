@@ -19,7 +19,7 @@ export class PlayScene extends Phaser.Scene{
     }
 
     [x: string]: object;
-    
+
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
     private monkeyhead!: Phaser.GameObjects.Sprite
     player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -29,7 +29,7 @@ export class PlayScene extends Phaser.Scene{
     scan!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
     moveEvent!: Phaser.Time.TimerEvent;
 
-  
+
 
     preload(){
         this.cursors = this.input.keyboard.createCursorKeys()
@@ -47,12 +47,12 @@ export class PlayScene extends Phaser.Scene{
        this.blockslayer.setCollisionBetween(1, 7, true);
        this.physics.world.bounds.width = 800
        this.physics.world.bounds.height = 800
-       
+
        //player
        this.player = this.physics.add.sprite(400, 300,'monkey_head')
        .setCircle(10)
        .setOffset(6);
-       this.player.setDepth(2);  
+       this.player.setDepth(2);
        this.physics.add.existing(this.player, true);
        this.player.setCollideWorldBounds(true);
        this.physics.add.collider(this.player, this.blockslayer);
@@ -93,7 +93,7 @@ export class PlayScene extends Phaser.Scene{
 
 
 
-       
+
        //keybinds
        this.cursors=this.input.keyboard.createCursorKeys()
        this.inputKeys = this.input.keyboard.addKeys({
@@ -102,18 +102,18 @@ export class PlayScene extends Phaser.Scene{
            left: Phaser.Input.Keyboard.KeyCodes.A,
            right: Phaser.Input.Keyboard.KeyCodes.D,
        })
-             
+
     }
-    
+
     private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 
-  
+
 
     }
 
     update(){
 
-        
+
         //fireanim
         this.input.once('pointerdown', () => {
             this.player.play("monkey_head");
@@ -126,25 +126,25 @@ export class PlayScene extends Phaser.Scene{
 
         //move
         const speed = 150
-        
+
         let playerVelocity = new Phaser.Math.Vector2();
         if(this.inputKeys.up.isDown) {
             playerVelocity.y = -1;
         } else if (this.inputKeys.down.isDown) {
             playerVelocity.y = 1;
-        } 
+        }
 
         if(this.inputKeys.left.isDown) {
             playerVelocity.x = -1;
         } else if (this.inputKeys.right.isDown) {
             playerVelocity.x = 1;
-        } 
+        }
         playerVelocity.normalize();
         playerVelocity.scale(speed);
         this.player.setVelocity(playerVelocity.x,playerVelocity.y)
-        
-        
-    
+
+
+
 
     }
 }
@@ -154,7 +154,7 @@ export class PlayScene extends Phaser.Scene{
 
 class Epoop extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: PlayScene, x:number,y: number, rotation: number, blockslayer: Phaser.Tilemaps.TilemapLayer){
-        super(scene, x, y, 'poop_projectile');    
+        super(scene, x, y, 'poop_projectile');
     }
     preUpdate(time: number, delta: number){
 
@@ -171,11 +171,11 @@ class Epoop extends Phaser.Physics.Arcade.Sprite {
             this.setActive(false),
             this.scene.sound.play("splet2");
         }
-        
+
 
     }
     Ethrow(x: number, y: number, rotation: number, pointer:Phaser.Input.Pointer){
-    
+
         this.body.reset(x, y);
         this.setActive(true);
         this.setVisible(true);
@@ -195,10 +195,10 @@ class poop extends Phaser.Physics.Arcade.Sprite {
     enemys: any;
 
     constructor(scene: PlayScene, x: number,y: number, rotation: number, blockslayer: Phaser.Tilemaps.TilemapLayer){
-        super(scene, x, y, 'poop_projectile');    
+        super(scene, x, y, 'poop_projectile');
     }
     preUpdate(time: number, delta: number){
-        super.preUpdate(time, delta);    
+        super.preUpdate(time, delta);
 
         if (this.scene.physics.collide(this, this.scene.enemy)){
             this.setVisible(false),
@@ -206,8 +206,8 @@ class poop extends Phaser.Physics.Arcade.Sprite {
             this.scene.sound.play("splet2"),
             this.scene.enemy.destroy();
             }
-   
-        
+
+
         if (this.scene.physics.collide(this, this.scene.blockslayer)){
             this.setVisible(false),
             this.setActive(false),
@@ -215,7 +215,7 @@ class poop extends Phaser.Physics.Arcade.Sprite {
         }
     }
     fling(x: number, y: number, rotation: number, pointer:Phaser.Input.Pointer){
-    
+
         this.body.reset(x, y);
         this.setActive(true);
         this.setVisible(true);
@@ -240,10 +240,10 @@ class poopgroup extends Phaser.Physics.Arcade.Group{
             active: false,
             visible: false,
             key: "poop_projectile"
-            
+
 
         })
-        
+
     }
 
     poopthrow(x: number, y: number, rotation: number, blockslayer: Phaser.Tilemaps.TilemapLayer){
@@ -264,10 +264,10 @@ class Epoopgroup extends Phaser.Physics.Arcade.Group{
             active: false,
             visible: false,
             key: "poop_projectile"
-            
+
 
         })
-        
+
     }
 
     poopthrow(x: number, y: number, rotation: number, blockslayer: Phaser.Tilemaps.TilemapLayer){
@@ -303,7 +303,7 @@ enum Direction{
 
 const randomDirection = (exclude: Direction) => {
     let newDirection = Phaser.Math.Between(0, 7)
-   
+
     while (newDirection === exclude){
         newDirection = Phaser.Math.Between(0, 7)
     }
@@ -316,7 +316,7 @@ class enemys extends Phaser.Physics.Arcade.Sprite{
     private direction = Direction.RIGHT
     moveEvent: Phaser.Time.TimerEvent;
     enemythrow: Phaser.Time.TimerEvent;
-    
+
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string){
         super(scene, x, y, texture)
@@ -325,7 +325,7 @@ class enemys extends Phaser.Physics.Arcade.Sprite{
         scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE,this.handleTileCollision, this)
 
 
-        
+
 
         this.moveEvent = scene.time.addEvent({
             delay: 2000,
@@ -349,7 +349,7 @@ class enemys extends Phaser.Physics.Arcade.Sprite{
 
     }
 
-  
+
 
     destroy(fromScene?:boolean){
         this.moveEvent.destroy(),
@@ -358,7 +358,7 @@ class enemys extends Phaser.Physics.Arcade.Sprite{
     }
 
     private handleTileCollision(go: Phaser.GameObjects.GameObject, tile: Phaser.Tilemaps.Tile){
-        
+
         if (go !== this){
             return
         }
@@ -372,26 +372,26 @@ class enemys extends Phaser.Physics.Arcade.Sprite{
 
 
         super.preUpdate(t, dt)
-        
+
         let speed = 100
 
-        if (this.scene.physics.overlap(this.scene.scan, this.scene.player) {
+        if (this.scene.physics.overlap(this.scene.scan, this.scene.player)) {
         //speed = 0,
         this.enemythrow.paused = false
         }
-        
+
 
         switch (this.direction){
             case Direction.UP:
                 this.setVelocity(0, -speed)
                 this.setAngle(-90)
                 break
-            
+
             case Direction.DOWN:
                 this.setVelocity(0, speed)
                 this.setAngle(90)
                 break
-            
+
             case Direction.LEFT:
                 this.setVelocity(-speed, 0)
                 this.setAngle(180)
@@ -401,22 +401,22 @@ class enemys extends Phaser.Physics.Arcade.Sprite{
                 this.setVelocity(-speed, speed)
                 this.setAngle(135)
                 break
-                
+
             case Direction.LEFTUP:
                 this.setVelocity(-speed, -speed)
                 this.setAngle(-135)
                 break
-            
+
             case Direction.RIGHT:
                 this.setVelocity(speed, 0)
                 this.setAngle(0)
                 break
-            
+
             case Direction.RIGHTDOWN:
                 this.setVelocity(speed, speed)
                 this.setAngle(45)
                 break
-            
+
             case Direction.RIGHTUP:
                 this.setVelocity(speed, -speed)
                 this.setAngle(-45)
