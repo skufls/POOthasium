@@ -337,7 +337,7 @@ class enemys extends Phaser.Physics.Arcade.Sprite{
 
 
         this.enemythrow = scene.time.addEvent({
-            delay: 100,
+            delay: 500,
             callback: ()=>{
                 this.scene.Epoopgroup.poopEthrow(this.scene.enemy.x, this.scene.enemy.y, this.scene.enemy.rotation, this.scene.blockslayer);
                 this.enemythrow.paused = true
