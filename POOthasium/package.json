@@ -2,6 +2,7 @@
   "dependencies": {
     "arcade": "^0.0.2",
     "matter": "^0.2.0",
+    "parcel": "^2.0.1",
     "phaser": "^3.55.2"
   },
   "devDependencies": {
